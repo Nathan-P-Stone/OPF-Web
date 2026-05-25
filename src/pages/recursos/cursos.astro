@@ -21,15 +21,13 @@ export const descripcion =
         > y estas revisando los recursos: {descripcion}
       </p>
     </Seccion>
-    <div class="flex">
+    <div>
       <a href="https://www.youtube.com/@olimpiadadefisicaslp4634">
         <Tarjeta titulo="Youtube" acento="_rojoYt">
           Revisa nuestro canal de Youtube donde compartimos las grabaciones de
           los cursos.
         </Tarjeta>
       </a>
-
-      <br />
 
       <a
         href="https://drive.google.com/drive/folders/0B4fzg4Xe1bTAM2FzcWxOS0V1TTg?resourcekey=0-o8HY4khCkZBCuoz3IOwMFA&usp=drive_link"
@@ -51,6 +49,8 @@ export const descripcion =
      * */
     color: var(--colorTexto);
     text-decoration: none;
+    /* este estilo es solo porque cada tarjeta es un 'a'*/
+    width: 300px;
   }
 
   h1 {
@@ -66,7 +66,8 @@ export const descripcion =
 
   main div {
     display: flex;
-    padding: 1rem;
+    flex-wrap: wrap;
     gap: 20px;
+    justify-content: center;
   }
 </style>
