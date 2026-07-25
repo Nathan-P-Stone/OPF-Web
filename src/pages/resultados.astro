@@ -66,20 +66,22 @@ if (resultadosPublicados) {
 ---
 
 <Layout>
-  <main class="contenedor-resultados">
+  <main>
     {
       resultadosPublicados ? (
         <>
           <Seccion titulo="Resultados del Segundo Selectivo" acento="azulUaslp">
-            <p class="subtitulo">
+            <p>
               Felicitamos a todas y todos los participantes del Segundo
               Selectivo por su dedicación y entusiasmo. Su esfuerzo refleja una
               verdadera pasión por el conocimiento y la ciencia.
             </p>
-            <p class="subtitulo">
+            <strong>
               Conoce a los perfiles destacados de esta edición.
-            </p>
+            </strong>
           </Seccion>
+        
+          <h1>Podio</h1>
 
           <section class="podio">
             {podiog.map((participante) => (
@@ -106,7 +108,7 @@ if (resultadosPublicados) {
           </section>
 
           <section class="seccion-tabla">
-            <h2 class="subtitulo-tabla">Tabla General de Posiciones</h2>
+            <h1>Tabla General de Posiciones</h2>
 
             <div class="tabla-responsiva">
               <table class="tabla-resultados">
@@ -148,7 +150,7 @@ if (resultadosPublicados) {
 </Layout>
 
 <style>
-  .contenedor-resultados {
+  main {
     max-width: 900px;
     margin: 0 auto;
     padding: 2rem;
@@ -180,7 +182,7 @@ if (resultadosPublicados) {
   }
 
   .escuela {
-    color: var(--verde);
+    color: var(--grisOscuro);
     font-weight: bold;
     margin-top: 0.5rem;
   }
@@ -209,8 +211,8 @@ if (resultadosPublicados) {
     margin-top: 4rem;
   }
 
-  .subtitulo-tabla {
-    font-size: 1.8rem;
+  h1 {
+    font-size: 2rem;
     color: var(--negro);
     margin-bottom: 2rem;
     text-align: center;
@@ -235,7 +237,7 @@ if (resultadosPublicados) {
   }
 
   .tabla-resultados th {
-    background-color: var(--naranja);
+    background-color: var(--verde);
     color: #fff;
     text-align: left;
   }
@@ -273,7 +275,7 @@ if (resultadosPublicados) {
       font-size: 2.2rem;
     }
 
-    .subtitulo {
+    p {
       font-size: 1rem;
     }
 
