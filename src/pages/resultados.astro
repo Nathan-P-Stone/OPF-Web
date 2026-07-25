@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import { createClient } from "@supabase/supabase-js";
 import Tarjeta from "../components/Tarjeta.astro";
+import Seccion from "../components/Seccion.astro";
 import Oro from "../assets/medallas/OPFOro.png";
 import Plata from "../assets/medallas/OPFPlata.png";
 import Bronce from "../assets/medallas/OPFBronce.png";
@@ -66,19 +67,19 @@ if (resultadosPublicados) {
 
 <Layout>
   <main class="contenedor-resultados">
-    <h1 class="titulo">Resultados del Segundo Selectivo</h1>
-
     {
       resultadosPublicados ? (
         <>
-          <p class="subtitulo">
-            Felicitamos a todas y todos los participantes del Segundo Selectivo
-            por su dedicación y entusiasmo. Su esfuerzo refleja una verdadera
-            pasión por el conocimiento y la ciencia.
-          </p>
-          <p class="subtitulo">
-            Conoce a los perfiles destacados de esta edición.
-          </p>
+          <Seccion titulo="Resultados del Segundo Selectivo" acento="azulUaslp">
+            <p class="subtitulo">
+              Felicitamos a todas y todos los participantes del Segundo
+              Selectivo por su dedicación y entusiasmo. Su esfuerzo refleja una
+              verdadera pasión por el conocimiento y la ciencia.
+            </p>
+            <p class="subtitulo">
+              Conoce a los perfiles destacados de esta edición.
+            </p>
+          </Seccion>
 
           <section class="podio">
             {podiog.map((participante) => (
@@ -87,16 +88,19 @@ if (resultadosPublicados) {
                 acento={participante.color}
                 colorTitulo={participante.color == "gris" ? "negro" : "blanco"}
                 titulo={participante.puesto}
-                class={`puesto-${participante.rango}`}
               >
-                <div class="medalla">
-                  <Image
-                    src={participante.medalla}
-                    alt={`Medalla de ${participante.puesto}`}
-                  />
+                <div
+                  class={`puesto-${participante.posicion + 1} puesto-contenido`}
+                >
+                  <div class="medalla">
+                    <Image
+                      src={participante.medalla}
+                      alt={`Medalla de ${participante.puesto}`}
+                    />
+                  </div>
+                  <h2>{participante.nombre}</h2>
+                  <p class="escuela">{participante.escuela}</p>
                 </div>
-                <h2>{participante.nombre}</h2>
-                <p class="escuela">{participante.escuela}</p>
               </Tarjeta>
             ))}
           </section>
@@ -148,25 +152,31 @@ if (resultadosPublicados) {
     max-width: 900px;
     margin: 0 auto;
     padding: 2rem;
-    text-align: center;
-  }
-
-  .titulo {
-    font-size: 2.8rem;
-    color: var(--azulUaslp);
-    margin-bottom: 0.5rem;
-  }
-
-  .subtitulo {
-    font-size: 1.2rem;
   }
 
   .podio {
     display: flex;
     gap: 1.5rem;
     justify-content: center;
-    margin-top: 3rem;
-    margin-bottom: 4rem;
+  }
+
+  .puesto-1 {
+    width: 200px;
+  }
+
+  .puesto-2 {
+    width: 200px;
+  }
+
+  .puesto-3 {
+    width: 200px;
+  }
+
+  .puesto-contenido {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
 
   .escuela {
