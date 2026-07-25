@@ -20,7 +20,7 @@ let podiog: any[] = [];
 let GRes: any[] = [];
 const Medallas = [Oro, Plata, Bronce];
 const NPodio = ["1er Lugar", "2do Lugar", "3er Lugar"];
-const Color = ["dorado", "gris","naranja"]
+const Color = ["dorado", "gris", "naranja"];
 
 const supabaseUrl = import.meta.env.SUPABASE_URL;
 const supabaseKey = import.meta.env.SUPABASE_ANON_KEY;
@@ -43,7 +43,7 @@ if (resultadosPublicados) {
     podiog = ParticipantesOrdenados.slice(0, 3).map(
       (participante: Participante, index: number) => ({
         puesto: NPodio[index],
-        posicion: index, 
+        posicion: index,
         color: Color[index],
         nombre: participante.nombre,
         escuela: participante.escuela,
@@ -72,9 +72,9 @@ if (resultadosPublicados) {
       resultadosPublicados ? (
         <>
           <p class="subtitulo">
-            Felicitamos a todas y todos los participantes del Segundo
-            Selectivo por su dedicación y entusiasmo. Su esfuerzo refleja
-            una verdadera pasión por el conocimiento y la ciencia.
+            Felicitamos a todas y todos los participantes del Segundo Selectivo
+            por su dedicación y entusiasmo. Su esfuerzo refleja una verdadera
+            pasión por el conocimiento y la ciencia.
           </p>
           <p class="subtitulo">
             Conoce a los perfiles destacados de esta edición.
@@ -82,7 +82,13 @@ if (resultadosPublicados) {
 
           <section class="podio">
             {podiog.map((participante) => (
-            <Tarjeta hover={true} acento={participante.color} colorTitulo={participante.color == "gris" ? "negro" : "blanco"} titulo={participante.puesto} class={`puesto-${participante.rango}`}>
+              <Tarjeta
+                hover={true}
+                acento={participante.color}
+                colorTitulo={participante.color == "gris" ? "negro" : "blanco"}
+                titulo={participante.puesto}
+                class={`puesto-${participante.rango}`}
+              >
                 <div class="medalla">
                   <Image
                     src={participante.medalla}
