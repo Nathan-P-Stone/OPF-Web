@@ -7,9 +7,6 @@ import Oro from "../assets/medallas/OPFOro.png";
 import Plata from "../assets/medallas/OPFPlata.png";
 import Bronce from "../assets/medallas/OPFBronce.png";
 
-// Ruta de las calis
-//import RawCal from "../data/resultados.json";
-
 // CAMBIAR A TRUE PARA PUBLICAR RESULTADOS
 const resultadosPublicados = true;
 
@@ -23,6 +20,7 @@ let podiog: any[] = [];
 let GRes: any[] = [];
 const Medallas = [Oro, Plata, Bronce];
 const NPodio = ["1er Lugar", "2do Lugar", "3er Lugar"];
+const Color = ["dorado", "gris","naranja"]
 
 const supabaseUrl = import.meta.env.SUPABASE_URL;
 const supabaseKey = import.meta.env.SUPABASE_ANON_KEY;
@@ -45,11 +43,17 @@ if (resultadosPublicados) {
     podiog = ParticipantesOrdenados.slice(0, 3).map(
       (participante: Participante, index: number) => ({
         puesto: NPodio[index],
+        posicion: index, 
+        color: Color[index],
         nombre: participante.nombre,
         escuela: participante.escuela,
         medalla: Medallas[index],
       }),
     );
+
+    // Ordenar el podio por tradicion 2,1,3
+    const ordenVisual = [1, 0, 2].filter((i) => podiog[i]);
+    podiog = ordenVisual.map((i) => podiog[i]);
 
     GRes = ParticipantesOrdenados.slice(3).map((participante, index) => ({
       posicion: index + 4,
@@ -62,15 +66,15 @@ if (resultadosPublicados) {
 
 <Layout>
   <main class="contenedor-resultados">
-    <h1 class="titulo">Resultados de la Olimpiada</h1>
+    <h1 class="titulo">Resultados del Segundo Selectivo</h1>
 
     {
       resultadosPublicados ? (
         <>
           <p class="subtitulo">
-            Felicitamos a todas y todos los participantes de la Olimpiada
-            Potosina de Física por su dedicación y entusiasmo. Su esfuerzo
-            refleja una verdadera pasión por el conocimiento y la ciencia.
+            Felicitamos a todas y todos los participantes del Segundo
+            Selectivo por su dedicación y entusiasmo. Su esfuerzo refleja
+            una verdadera pasión por el conocimiento y la ciencia.
           </p>
           <p class="subtitulo">
             Conoce a los perfiles destacados de esta edición.
@@ -78,7 +82,7 @@ if (resultadosPublicados) {
 
           <section class="podio">
             {podiog.map((participante) => (
-              <Tarjeta hover={true}>
+            <Tarjeta hover={true} acento={participante.color} colorTitulo={participante.color == "gris" ? "negro" : "blanco"} titulo={participante.puesto} class={`puesto-${participante.rango}`}>
                 <div class="medalla">
                   <Image
                     src={participante.medalla}
@@ -86,9 +90,7 @@ if (resultadosPublicados) {
                   />
                 </div>
                 <h2>{participante.nombre}</h2>
-                <hr />
                 <p class="escuela">{participante.escuela}</p>
-                <p class="puesto-texto">{participante.puesto}</p>
               </Tarjeta>
             ))}
           </section>
@@ -193,7 +195,7 @@ if (resultadosPublicados) {
 
   .subtitulo-tabla {
     font-size: 1.8rem;
-    color: var(--naranja);
+    color: var(--negro);
     margin-bottom: 2rem;
     text-align: center;
   }
