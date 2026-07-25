@@ -9,6 +9,7 @@ export const colores = {
   cremaOscuro: "#F1E7D0",
   negro: "#1A1A1A",
   gris: "#DEDAD4",
+  grisOscuro: "#828282",
   blanco: "#FFFFFF",
   gradienteNaranja: "linear-gradient(to right, #B85025, #C8960C)",
   gradienteAzul: "linear-gradient(to right, #1F6BED, #23498C)",
