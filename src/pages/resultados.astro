@@ -83,25 +83,27 @@ if (resultadosPublicados) {
 
           <section class="podio">
             {podiog.map((participante) => (
-              <Tarjeta
-                hover={true}
-                acento={participante.color}
-                colorTitulo={participante.color == "gris" ? "negro" : "blanco"}
-                titulo={participante.puesto}
-              >
-                <div
-                  class={`puesto-${participante.posicion + 1} puesto-contenido`}
+              <div class={`podio-item puesto-${participante.posicion + 1}`}>
+                <Tarjeta
+                  hover={true}
+                  acento={participante.color}
+                  colorTitulo={
+                    participante.color == "gris" ? "negro" : "blanco"
+                  }
+                  titulo={participante.puesto}
                 >
-                  <div class="medalla">
-                    <Image
-                      src={participante.medalla}
-                      alt={`Medalla de ${participante.puesto}`}
-                    />
+                  <div class="puesto-contenido">
+                    <div class="medalla">
+                      <Image
+                        src={participante.medalla}
+                        alt={`Medalla de ${participante.puesto}`}
+                      />
+                    </div>
+                    <h2>{participante.nombre}</h2>
+                    <p class="escuela">{participante.escuela}</p>
                   </div>
-                  <h2>{participante.nombre}</h2>
-                  <p class="escuela">{participante.escuela}</p>
-                </div>
-              </Tarjeta>
+                </Tarjeta>
+              </div>
             ))}
           </section>
 
@@ -285,6 +287,18 @@ if (resultadosPublicados) {
     .podio > * {
       width: 100%;
       max-width: 320px;
+    }
+
+    .podio-item.puesto-1 {
+      order: 1;
+    }
+
+    .podio-item.puesto-2 {
+      order: 2;
+    }
+
+    .podio-item.puesto-3 {
+      order: 3;
     }
 
     .subtitulo-tabla {
