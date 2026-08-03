@@ -104,14 +104,18 @@ if (resultadosPublicados) {
                     />
                     <h2 class="nombre-ganador">{participante.nombre}</h2>
                     <p class="escuela-ganador">{participante.escuela}</p>
-                    <Etiqueta colorFondo="negro" decoraciones={false}>{participante.puesto}</Etiqueta>
+                    <Etiqueta colorFondo="negro" decoraciones={false}>
+                      {participante.puesto}
+                    </Etiqueta>
                   </div>
                 </div>
               ))}
             </section>
 
             <section class="seccion-tabla">
-              <Etiqueta colorFondo="blanco" colorTexto="negro">Tabla General de Posiciones</Etiqueta>
+              <Etiqueta colorFondo="blanco" colorTexto="negro">
+                Tabla General de Posiciones
+              </Etiqueta>
 
               <div class="tabla-responsiva">
                 <table class="tabla-resultados">
