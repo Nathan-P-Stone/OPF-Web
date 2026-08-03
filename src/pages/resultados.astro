@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import { createClient } from "@supabase/supabase-js";
 import Tarjeta from "../components/Tarjeta.astro";
+import Etiqueta from "../components/Etiqueta.astro";
 import Seccion from "../components/Seccion.astro";
 import Oro from "../assets/medallas/OPFOro.png";
 import Plata from "../assets/medallas/OPFPlata.png";
@@ -21,7 +22,11 @@ let podiog: any[] = [];
 let GRes: any[] = [];
 const Medallas = [Oro, Plata, Bronce];
 const NPodio = ["1er Lugar", "2do Lugar", "3er Lugar"];
-const Color = ["oro", "plata", "bronce"];
+const Gradientes = [
+  "linear-gradient(135deg, #ffd700, #fdb931)", // oro
+  "linear-gradient(135deg, #e0e0e0, #9e9e9e)", // plata
+  "linear-gradient(135deg, #fb995d, #c6704e)", // bronce
+];
 
 const supabaseUrl = import.meta.env.SUPABASE_URL;
 const supabaseKey = import.meta.env.SUPABASE_ANON_KEY;
@@ -45,7 +50,7 @@ if (resultadosPublicados) {
       (participante: Participante, index: number) => ({
         puesto: NPodio[index],
         posicion: index,
-        color: Color[index],
+        gradiente: Gradientes[index],
         nombre: participante.nombre,
         escuela: participante.escuela,
         medalla: Medallas[index],
@@ -87,7 +92,10 @@ if (resultadosPublicados) {
                 <div
                   class={`columna-podio puesto-${participante.posicion + 1}`}
                 >
-                  <div class={`pilar-fondo pilar-${participante.color}`} />
+                  <div
+                    class="pilar-fondo"
+                    style={`--gradiente: ${participante.gradiente}`}
+                  />
                   <div class="info-ganador">
                     <Image
                       src={participante.medalla}
@@ -96,14 +104,14 @@ if (resultadosPublicados) {
                     />
                     <h2 class="nombre-ganador">{participante.nombre}</h2>
                     <p class="escuela-ganador">{participante.escuela}</p>
-                    <span class="etiqueta-puesto">{participante.puesto}</span>
+                    <Etiqueta colorFondo="negro" decoraciones={false}>{participante.puesto}</Etiqueta>
                   </div>
                 </div>
               ))}
             </section>
 
             <section class="seccion-tabla">
-              <h2>Tabla General de Posiciones</h2>
+              <Etiqueta colorFondo="blanco" colorTexto="negro">Tabla General de Posiciones</Etiqueta>
 
               <div class="tabla-responsiva">
                 <table class="tabla-resultados">
@@ -172,6 +180,12 @@ if (resultadosPublicados) {
     align-items: flex-start;
     position: relative;
     z-index: 1;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
   }
 
   .columna-podio {
@@ -181,6 +195,12 @@ if (resultadosPublicados) {
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    @media (max-width: 768px) {
+      width: 100%;
+      max-width: 320px;
+      margin: 0 !important;
+    }
   }
 
   .pilar-fondo {
@@ -189,6 +209,7 @@ if (resultadosPublicados) {
     left: 0;
     width: 100%;
     height: 1000px;
+    background: var(--gradiente);
     border-radius: 60px 60px 0 0;
     z-index: 1;
     mask-image: linear-gradient(
@@ -200,18 +221,12 @@ if (resultadosPublicados) {
     box-shadow:
       inset 0 4px 15px rgba(255, 255, 255, 0.4),
       0 10px 20px rgba(0, 0, 0, 0.1);
-  }
 
-  .pilar-oro {
-    background: linear-gradient(135deg, #ffd700, #fdb931);
-  }
-
-  .pilar-plata {
-    background: linear-gradient(135deg, #e0e0e0, #9e9e9e);
-  }
-
-  .pilar-bronce {
-    background: linear-gradient(135deg, #fb995d, #c6704e);
+    @media (max-width: 768px) {
+      height: 100%;
+      mask-image: none;
+      border-radius: 16px;
+    }
   }
 
   /* CONSIDEREN HACER UN NUEVO COMPONENTE CON ESTO */
@@ -245,34 +260,36 @@ if (resultadosPublicados) {
     margin: 0 0 1rem 0;
   }
 
-  .etiqueta-puesto {
-    display: inline-block;
-    background: #111;
-    color: #fff;
-    padding: 0.3rem 1rem;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    text-transform: uppercase;
-  }
   /* ==================================== */
 
   /*Prosigamos... */
   .puesto-1 {
     z-index: 1;
     margin-top: 0; /* Mero arriba */
+
+    @media (max-width: 768px) {
+      order: 1;
+    }
   } /** Este wey por ejemplo está en la capa 1 */
 
   .puesto-2 {
     z-index: 2;
     margin-top: 70px;
     margin-right: -20px;
+
+    @media (max-width: 768px) {
+      order: 2;
+    }
   } /** Y este otro wey en la capa 2 */
 
   .puesto-3 {
     z-index: 3;
     margin-top: 130px; /*Mero abajo, PD: te amo Abigail*/
     margin-left: -20px;
+
+    @media (max-width: 768px) {
+      order: 3;
+    }
   }
 
   /* TABLA */
@@ -281,17 +298,10 @@ if (resultadosPublicados) {
     z-index: 10;
     text-align: center;
     margin-top: 0.2rem;
-  }
 
-  .seccion-tabla h2 {
-    font-size: 1.8rem;
-    color: var(--negro);
-    margin-bottom: 1.5rem;
-    display: inline-block;
-    background: var(--crema);
-    padding: 0.5rem 2rem;
-    border-radius: 30px;
-    backdrop-filter: blur(5px);
+    @media (max-width: 768px) {
+      margin-top: 2rem;
+    }
   }
 
   .tabla-responsiva {
@@ -300,93 +310,43 @@ if (resultadosPublicados) {
     border: 1px solid var(--gris);
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0, 08);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
   }
 
   .tabla-resultados {
     width: 100%;
     border-collapse: collapse;
     text-align: left;
-  }
 
-  .tabla-resultados th,
-  .tabla-resultados td {
-    padding: 1.2rem;
-    border-bottom: 1px solid var(--gris);
-  }
+    & th,
+    & td {
+      padding: 1.2rem;
+      border-bottom: 1px solid var(--gris);
 
-  .tabla-resultados th {
-    background-color: var(--verde);
-    color: #fff;
-  }
+      @media (max-width: 768px) {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+      }
+    }
 
-  .tabla-resultados tbody tr:hover {
-    background-color: var(--crema);
+    & th {
+      background-color: var(--verde);
+      color: #fff;
+    }
+
+    & tbody tr:hover {
+      background-color: var(--crema);
+    }
   }
 
   /* VISTA DE ESPERA */
-  .proximamente {
-    margin-top: 4rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 5rem 2rem;
-  }
-
   .icono-espera {
     font-size: 4rem;
     margin-bottom: 1.5rem;
   }
 
-  .titulo-espera {
-    color: var(--negro);
-    font-size: 2.2rem;
-    margin-bottom: 1rem;
-  }
-
   .texto-espera {
     font-size: 1.2rem;
     line-height: 1.6;
-  }
-  /* Ajustes para moviles que se veía qlero */
-  @media (max-width: 768px) {
-    .podio {
-      flex-direction: column;
-      align-items: center;
-      gap: 1.5rem;
-    }
-
-    .columna-podio {
-      width: 100%;
-      max-width: 320px;
-      margin: 0 !important;
-    }
-
-    .pilar-fondo {
-      height: 100%;
-      mask-image: none;
-      border-radius: 16px;
-    }
-
-    .seccion-tabla {
-      margin-top: 2rem;
-    }
-
-    /* Orden natural vertical (1, 2, 3) */
-    .puesto-1 {
-      order: 1;
-    }
-    .puesto-2 {
-      order: 2;
-    }
-    .puesto-3 {
-      order: 3;
-    }
-
-    .tabla-resultados th,
-    .tabla-resultados td {
-      padding: 0.8rem;
-      font-size: 0.9rem;
-    }
   }
 </style>
